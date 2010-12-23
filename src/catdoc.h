@@ -59,11 +59,11 @@ char *add_exe_path(const char* name);
 # endif
 
 # ifndef SYSTEMRC
-#  define SYSTEMRC "/usr/local/lib/catdoc/catdocrc"
+#  define SYSTEMRC "/usr/share/catdoc/catdocrc"
 # endif
 
 # ifndef CHARSETPATH
-#  define CHARSETPATH "/usr/local/lib/catdoc"
+#  define CHARSETPATH "/usr/share/catdoc"
 # endif
 /* Macro to add executable directory in place of %s in path.
    Not usable in Unix, where executable can have more then one
