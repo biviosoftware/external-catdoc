@@ -175,34 +175,48 @@ FILE* ole_init(FILE *f, void *buffer, size_t bufSize)  {
 	sbdMaxLen=10;
 	sbdCurrent = sbdStart = getlong(oleBuf,0x3c);
 	if (sbdStart > 0) {
+	fprintf(stderr,"test8h1\n");
 		if((SBD=malloc(sectorSize*sbdMaxLen)) == NULL ) {
 			ole_finish();
 			return NULL;
 		}
+	fprintf(stderr,"test8h2\n");
 		while(1) {
+	fprintf(stderr,"test8h3\n");
 			fseek(newfile, 512+sbdCurrent*sectorSize, SEEK_SET);
+	fprintf(stderr,"test8h4\n");
 			fread(SBD+sbdLen*sectorSize, 1, sectorSize, newfile);
+	fprintf(stderr,"test8h5\n");
 			sbdLen++;
 			if (sbdLen >= sbdMaxLen) {
+	fprintf(stderr,"test8h6\n");
 				unsigned char *newSBD;
 				
 				sbdMaxLen+=5;
 				if ((newSBD=realloc(SBD, sectorSize*sbdMaxLen)) != NULL) {
+	fprintf(stderr,"test8h7\n");
 					SBD=newSBD;
 				} else {
+	fprintf(stderr,"test8h8\n");
 					perror("SBD realloc error");
+	fprintf(stderr,"test8h9\n");
 					ole_finish();
+	fprintf(stderr,"test8h10\n");
 					return NULL;
 				}
 			}
+	fprintf(stderr,"test8h11\n");
 			sbdCurrent = getlong(BBD, sbdCurrent*4);
+	fprintf(stderr,"test8h12\n");
 			if(sbdCurrent < 0 ||
 				sbdCurrent >= fileLength/sectorSize)
 				break;
 		}
+	fprintf(stderr,"test8h13\n");
 		sbdNumber = (sbdLen*sectorSize)/shortSectorSize;
 /*   		fprintf(stderr, "sbdLen=%ld sbdNumber=%ld\n",sbdLen, sbdNumber); */
 	} else {
+	fprintf(stderr,"test8h14\n");
 		SBD=NULL;
 	}
 	fprintf(stderr,"test8i\n");
