@@ -59,8 +59,10 @@ FILE* ole_init(FILE *f, void *buffer, size_t bufSize)  {
 	long int sbdMaxLen, sbdCurrent, propMaxLen, propCurrent, mblock, msat_size;
 	oleEntry *tEntry;
 
+	fprintf(stderr,"test8a\n");
 	/* deleting old data (if it was allocated) */
 	ole_finish();
+	fprintf(stderr,"test8b\n");
 	
 	if (fseek(f,0,SEEK_SET) == -1) {
 		if ( errno == ESPIPE ) {
@@ -89,6 +91,7 @@ FILE* ole_init(FILE *f, void *buffer, size_t bufSize)  {
 	} else {
 		newfile=f;
 	}	
+	fprintf(stderr,"test8c\n");
 	fseek(newfile,0,SEEK_END);
 	fileLength=ftell(newfile);
 /* 	fprintf(stderr, "fileLength=%ld\n", fileLength); */
@@ -102,6 +105,7 @@ FILE* ole_init(FILE *f, void *buffer, size_t bufSize)  {
 	}
  	sectorSize = 1<<getshort(oleBuf,0x1e);
 	shortSectorSize=1<<getshort(oleBuf,0x20);
+	fprintf(stderr,"test8d\n");
 	
 /* Read BBD into memory */
 	bbdNumBlocks = getulong(oleBuf,0x2c);
@@ -109,6 +113,7 @@ FILE* ole_init(FILE *f, void *buffer, size_t bufSize)  {
 		return NULL;
 	}
 	
+	fprintf(stderr,"test8e\n");
 	if((tmpBuf=malloc(MSAT_ORIG_SIZE)) == NULL ) {
 		return NULL;
 	}
@@ -118,6 +123,7 @@ FILE* ole_init(FILE *f, void *buffer, size_t bufSize)  {
 
 /* 	fprintf(stderr, "msat_size=%ld\n", msat_size); */
 
+	fprintf(stderr,"test8f\n");
 	i=0;
 	while((mblock >= 0) && (i < msat_size)) {
 		unsigned char *newbuf;
@@ -143,6 +149,7 @@ FILE* ole_init(FILE *f, void *buffer, size_t bufSize)  {
 		mblock=getlong(tmpBuf, MSAT_ORIG_SIZE+(sectorSize-4)*i);
 	}
 	
+	fprintf(stderr,"test8g\n");
 /* 	fprintf(stderr, "bbdNumBlocks=%ld\n", bbdNumBlocks); */
 	for(i=0; i< bbdNumBlocks; i++) {
 		long int bbdSector=getlong(tmpBuf,4*i);
@@ -162,6 +169,7 @@ FILE* ole_init(FILE *f, void *buffer, size_t bufSize)  {
 	}
 	free(tmpBuf);
 	
+	fprintf(stderr,"test8h\n");
 /* Read SBD into memory */
 	sbdLen=0;
 	sbdMaxLen=10;
@@ -197,6 +205,7 @@ FILE* ole_init(FILE *f, void *buffer, size_t bufSize)  {
 	} else {
 		SBD=NULL;
 	}
+	fprintf(stderr,"test8i\n");
 /* Read property catalog into memory */
 	propLen = 0;
 	propMaxLen = 5;
@@ -239,6 +248,7 @@ FILE* ole_init(FILE *f, void *buffer, size_t bufSize)  {
 		properties = NULL;
 		return NULL;
 	}
+	fprintf(stderr,"test8j\n");
 	
 	
 /* Find Root Entry */
@@ -249,12 +259,14 @@ FILE* ole_init(FILE *f, void *buffer, size_t bufSize)  {
 		}
 		ole_close((FILE*)tEntry);
 	}
+	fprintf(stderr,"test8k\n");
 	propCurNumber = 0;
 	fseek(newfile, 0, SEEK_SET);
 	if (!rootEntry) {
 		fprintf(stderr,"Broken OLE structure. Cannot find root entry in this file!\n");		ole_finish();
 		return NULL;
 	}	
+	fprintf(stderr,"test8l\n");
 	return newfile;
 }
 
