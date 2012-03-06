@@ -56,6 +56,7 @@ FILE* ole_init(FILE *f, void *buffer, size_t bufSize)  {
 	unsigned char *tmpBuf;
 	FILE *newfile;
 	int ret=0, i;
+	long int sbdcount=0;
 	long int sbdMaxLen, sbdCurrent, propMaxLen, propCurrent, mblock, msat_size;
 	oleEntry *tEntry;
 
@@ -180,6 +181,9 @@ FILE* ole_init(FILE *f, void *buffer, size_t bufSize)  {
 				
 				sbdMaxLen+=5;
 				if ((newSBD=realloc(SBD, sectorSize*sbdMaxLen)) != NULL) {
+				  sbdcount++;
+				  fprintf(stderr, "realloc %d\n", sbdcount);
+				  
 					SBD=newSBD;
 				} else {
 					perror("SBD realloc error");
