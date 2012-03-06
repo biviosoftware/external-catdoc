@@ -60,7 +60,7 @@ int analyze_format(FILE *f) {
 	fprintf(stderr,"test6b\n");
 			set_ole_func();
 			while((ole_file=ole_readdir(new_file)) != NULL) {
-	fprintf(stderr,"test6c" . count . "\n");
+	fprintf(stderr,"test6c %s\n", count);
 			        if (count++ > 10000) {
 				        fprintf(stderr,"Infinite loop detected, quitting");
 					exit(1);
