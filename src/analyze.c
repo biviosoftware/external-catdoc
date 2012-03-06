@@ -30,6 +30,7 @@ int analyze_format(FILE *f) {
 	int ret_code=69;
 	int count=0;
 
+	fprintf(stderr,"test1");
 	if (!signature_check) {
 		/* forced parsing */
 		/* no autodetect possible. Assume 8-bit if not overriden on
@@ -38,8 +39,11 @@ int analyze_format(FILE *f) {
 			get_unicode_char=get_8bit_char;
 		return process_file(f,LONG_MAX);
 	}
+	fprintf(stderr,"test2");
 	catdoc_read(buffer,4,1,f);
+	fprintf(stderr,"test3");
 	buffer[4]=0;
+	fprintf(stderr,"test4");
 	if (strncmp(buffer,write_sign,2)==0) {
 		printf("[Windows Write file. Some garbage expected]\n");
 		get_unicode_char=get_8bit_char;
@@ -50,7 +54,9 @@ int analyze_format(FILE *f) {
 	   fread(buffer+4,1,124,f);	
 	   return parse_word_header(buffer,f,128,0);
 	}	
+	fprintf(stderr,"test5");
 	fread(buffer+4,1,4,f);
+	fprintf(stderr,"test6");
 	if (strncmp(buffer,ole_sign,8)==0) {
 		if ((new_file=ole_init(f, buffer, 8)) != NULL) {
 			set_ole_func();
@@ -80,6 +86,7 @@ int analyze_format(FILE *f) {
 		copy_out(f,buffer);
 		return 0;
 	}
+	fprintf(stderr,"test7");
 	
 	return ret_code;
 }   
