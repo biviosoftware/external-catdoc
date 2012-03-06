@@ -184,7 +184,9 @@ FILE* ole_init(FILE *f, void *buffer, size_t bufSize)  {
 		}
 	fprintf(stderr,"test8h2\n");
 		while(1) {
-		  fprintf(stderr,"test8h3 %s\n", count++);
+		  count++;
+		  
+		  fprintf(stderr,"test8h3 %s\n", count);
 			fseek(newfile, 512+sbdCurrent*sectorSize, SEEK_SET);
 	fprintf(stderr,"test8h4\n");
 			fread(SBD+sbdLen*sectorSize, 1, sectorSize, newfile);
