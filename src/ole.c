@@ -180,11 +180,8 @@ FILE* ole_init(FILE *f, void *buffer, size_t bufSize)  {
 				unsigned char *newSBD;
 				
 				sbdMaxLen+=5;
-				if ((newSBD=realloc(SBD, sectorSize*sbdMaxLen)) != NULL) {
-				  sbdcount++;
-				  fprintf(stderr, "realloc %d\n", sbdcount);
-				  
-					SBD=newSBD;
+				if (sbdcount++ < 10000 && (newSBD=realloc(SBD, sectorSize*sbdMaxLen)) != NULL) {
+				        SBD=newSBD;
 				} else {
 					perror("SBD realloc error");
 					ole_finish();
