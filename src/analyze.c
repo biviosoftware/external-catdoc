@@ -28,6 +28,7 @@ int analyze_format(FILE *f) {
 	long offset=0;
 	FILE *new_file, *ole_file;
 	int ret_code=69;
+	int count=0;
 
 	if (!signature_check) {
 		/* forced parsing */
@@ -54,6 +55,11 @@ int analyze_format(FILE *f) {
 		if ((new_file=ole_init(f, buffer, 8)) != NULL) {
 			set_ole_func();
 			while((ole_file=ole_readdir(new_file)) != NULL) {
+			        if (count++ > 10000) {
+				        fprintf(stderr,"Infinite loop detected, quitting");
+					exit(1);
+				}
+
 				int res=ole_open(ole_file);
 				if (res >= 0) {
 					if (strcmp(((oleEntry*)ole_file)->name , "WordDocument") == 0) {
