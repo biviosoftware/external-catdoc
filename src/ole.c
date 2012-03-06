@@ -174,6 +174,8 @@ FILE* ole_init(FILE *f, void *buffer, size_t bufSize)  {
 	sbdLen=0;
 	sbdMaxLen=10;
 	sbdCurrent = sbdStart = getlong(oleBuf,0x3c);
+	int count=0;
+	
 	if (sbdStart > 0) {
 	fprintf(stderr,"test8h1\n");
 		if((SBD=malloc(sectorSize*sbdMaxLen)) == NULL ) {
@@ -182,7 +184,7 @@ FILE* ole_init(FILE *f, void *buffer, size_t bufSize)  {
 		}
 	fprintf(stderr,"test8h2\n");
 		while(1) {
-	fprintf(stderr,"test8h3\n");
+		  fprintf(stderr,"test8h3 %s\n", count++);
 			fseek(newfile, 512+sbdCurrent*sectorSize, SEEK_SET);
 	fprintf(stderr,"test8h4\n");
 			fread(SBD+sbdLen*sectorSize, 1, sectorSize, newfile);
