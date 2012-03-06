@@ -38,7 +38,6 @@ int analyze_format(FILE *f) {
 			get_unicode_char=get_8bit_char;
 		return process_file(f,LONG_MAX);
 	}
-
 	catdoc_read(buffer,4,1,f);
 	buffer[4]=0;
 	if (strncmp(buffer,write_sign,2)==0) {
@@ -51,57 +50,36 @@ int analyze_format(FILE *f) {
 	   fread(buffer+4,1,124,f);	
 	   return parse_word_header(buffer,f,128,0);
 	}	
-
 	fread(buffer+4,1,4,f);
-	fprintf(stderr,"test6\n");
 	if (strncmp(buffer,ole_sign,8)==0) {
-	fprintf(stderr,"test6a\n");
 		if ((new_file=ole_init(f, buffer, 8)) != NULL) {
-	fprintf(stderr,"test6b\n");
 			set_ole_func();
 			while((ole_file=ole_readdir(new_file)) != NULL) {
-	fprintf(stderr,"test6c %s\n", count);
 			        if (count++ > 10000) {
 				        fprintf(stderr,"Infinite loop detected, quitting");
 					exit(1);
 				}
 
-	fprintf(stderr,"test6d\n");
 				int res=ole_open(ole_file);
-	fprintf(stderr,"test6e\n");
 				if (res >= 0) {
-	fprintf(stderr,"test6f\n");
 					if (strcmp(((oleEntry*)ole_file)->name , "WordDocument") == 0) {
-	fprintf(stderr,"test6g\n");
 						offset=catdoc_read(buffer, 1, 128, ole_file);
-	fprintf(stderr,"test6h\n");
 						ret_code=parse_word_header(buffer,ole_file,-offset,offset);
-	fprintf(stderr,"test6i\n");
 					}
 				} 
-	fprintf(stderr,"test6j\n");
 				ole_close(ole_file);
-	fprintf(stderr,"test6k\n");
 			}
-	fprintf(stderr,"test6l\n");
 			set_std_func();
-	fprintf(stderr,"test6m\n");
 			ole_finish();
-	fprintf(stderr,"test6n\n");
 		} else {
-	fprintf(stderr,"test6o\n");
 			fprintf(stderr,"Broken OLE file. Try using -b switch");
 			exit(1);
 		}	
 	} else {
-	fprintf(stderr,"test6p\n");
 		set_std_func();
-	fprintf(stderr,"test6q\n");
 		copy_out(f,buffer);
-	fprintf(stderr,"test6r\n");
 		return 0;
 	}
-	fprintf(stderr,"test7");
 	
 	return ret_code;
 }   
