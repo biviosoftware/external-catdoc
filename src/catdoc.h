@@ -30,7 +30,7 @@
 
 
 #if defined(__MSDOS__) || defined(_WIN32)
-/* MS-DOS doesn't like dot at first char and thinks that suffix 
+/* MS-DOS doesn't like dot at first char and thinks that suffix
  * should be separated by dot. So we'd call personal config catdoc.rc
  */
 # define USERRC "catdoc.rc"
@@ -59,11 +59,11 @@ char *add_exe_path(const char* name);
 # endif
 
 # ifndef SYSTEMRC
-#  define SYSTEMRC "/usr/share/catdoc/catdocrc"
+#  define SYSTEMRC "/usr/local/share/catdoc/catdocrc"
 # endif
 
 # ifndef CHARSETPATH
-#  define CHARSETPATH "/usr/share/catdoc"
+#  define CHARSETPATH "/usr/local/share/catdoc"
 # endif
 /* Macro to add executable directory in place of %s in path.
    Not usable in Unix, where executable can have more then one
@@ -102,7 +102,7 @@ char *add_exe_path(const char* name);
 # ifndef SPEC_EXT
 #  define SPEC_EXT ".spc"
 # endif
-# ifndef REPL_EXT 
+# ifndef REPL_EXT
 #  define REPL_EXT ".rpl"
 # endif
 #else
@@ -119,7 +119,7 @@ char *add_exe_path(const char* name);
 /* Buffer sizes for 16-bit DOS progran */
 #define PARAGRAPH_BUFFER 16384
 #define FILE_BUFFER  32256
-#define PATH_BUF_SIZE 80 
+#define PATH_BUF_SIZE 80
 #else
 /* Buffers for 32-bit and more program */
 #define PARAGRAPH_BUFFER 262144
@@ -175,7 +175,7 @@ extern SUBSTMAP replacements;
                     i.e copyright sign */
 extern int verbose; /* if true, some additional information would be
 		       printed. defined in analyze.c */
-extern int (*get_unicode_char)(FILE *f,long *offset,long fileend); 
+extern int (*get_unicode_char)(FILE *f,long *offset,long fileend);
 /* pointer to function which gets
                                      a char from stream */
 
@@ -208,7 +208,7 @@ void read_config_file(const char *filename);
 void get_locale_charset(void);
 #if  defined(HAVE_STRFTIME) && !defined(__TURB0C__)
 void	set_time_locale();
-#endif	
+#endif
 #endif
 SUBSTMAP read_substmap(char* filename);
 extern int longest_sequence;/* for checking which value of wrap_margin
@@ -229,7 +229,7 @@ extern char *input_buffer,*output_buffer;
 #ifndef HAVE_STRDUP
 	char *strdup(const char *s);
 #endif
-/* numeric conversions */	
+/* numeric conversions */
 long int getlong(unsigned char *buffer,int offset);
 unsigned long int getulong(unsigned char *buffer,int offset);
 unsigned int getshort(unsigned char *buffer,int offset);
